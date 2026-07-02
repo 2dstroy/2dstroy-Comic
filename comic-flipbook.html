@@ -507,7 +507,7 @@
       </div>
       <div class="card-info">
         <div class="comic-title">One Fish</div>
-        <div class="comic-meta">6 pages · Adventure · All Ages</div>
+        <div class="comic-meta">4 pages · Adventure · All Ages</div>
         <div class="read-btn">READ NOW ▶</div>
       </div>
     </div>
@@ -559,12 +559,7 @@ const oneFishPages = [
     left: 'page2',
     right: 'page3',
   },
-  // 2: Pages 4–5
-  {
-    left: 'page4',
-    right: 'page5',
-  },
-  // 3: Back cover
+  // 2: Back cover
   {
     left: 'back-cover',
     right: 'back-cover-blank',
@@ -583,8 +578,6 @@ function renderPage(type, container) {
     'page1': renderPage1,
     'page2': renderPage2,
     'page3': renderPage3,
-    'page4': renderPage4,
-    'page5': renderPage5,
     'back-cover': renderBackCover,
     'back-cover-blank': renderBlank,
   };
@@ -632,7 +625,6 @@ function renderPage1(c) {
   renderImagePage(c, 'comics/page1.png', 'One Fish - Page 1', '1', 'right');
 }
 
-
 // -- PAGE 2 --
 function renderPage2(c) {
   renderImagePage(c, 'comics/page2.png', 'One Fish - Page 2', '2', 'left');
@@ -641,16 +633,6 @@ function renderPage2(c) {
 // -- PAGE 3 --
 function renderPage3(c) {
   renderImagePage(c, 'comics/page3.png', 'One Fish - Page 3', '3', 'right');
-}
-
-// -- PAGE 4 --
-function renderPage4(c) {
-  renderImagePage(c, 'comics/page4.png', 'One Fish - Page 4', '4', 'left');
-}
-
-// -- PAGE 5 --
-function renderPage5(c) {
-  renderImagePage(c, 'comics/page5.png', 'One Fish - Page 5', '5', 'right');
 }
 
 // -- BACK COVER --
@@ -745,7 +727,7 @@ function updateControls() {
   document.getElementById('prev-btn').disabled = currentSpread === 0;
   document.getElementById('next-btn').disabled = currentSpread === totalSpreads - 1;
 
-  const labels = ['COVER', 'PP. 2–3', 'PP. 4–5', 'THE END'];
+  const labels = ['COVER', 'PP. 2–3', 'THE END'];
   document.getElementById('page-indicator').textContent = labels[currentSpread] || `SPREAD ${currentSpread+1}`;
 }
 
