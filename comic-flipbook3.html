@@ -121,11 +121,6 @@
     overflow: hidden;
   }
 
-  /* Cover art for One Fish */
-  .cover-onefish {
-    background: linear-gradient(160deg, #a8d8ea 0%, #e8f4f8 60%, #c9e9f6 100%);
-  }
-
   .card-info {
     padding: 14px 16px 16px;
   }
@@ -261,7 +256,6 @@
     justify-content: center;
   }
 
-  /* Two-page spread */
   .spread {
     display: flex;
     width: 100%;
@@ -292,7 +286,6 @@
     background: linear-gradient(to left, #e8dfc8 0%, var(--paper) 100%);
   }
 
-  /* Spine shadow */
   .spread::after {
     content: '';
     position: absolute;
@@ -310,7 +303,6 @@
     z-index: 10;
   }
 
-  /* Page content panels */
   .comic-page {
     width: 100%;
     height: 100%;
@@ -398,20 +390,14 @@
   .page-left .page-number { left: 10px; }
   .page-right .page-number { right: 10px; }
 
-  /* Cover styles */
   .cover-panel {
     background: linear-gradient(160deg, #a8d8ea 0%, #e8f4f8 60%, #b5e0f5 100%);
     border: none;
     flex: 1;
   }
 
-  /* Flip animation */
-  .spread.flip-left {
-    animation: flipLeft 0.5s ease-in-out;
-  }
-  .spread.flip-right {
-    animation: flipRight 0.5s ease-in-out;
-  }
+  .spread.flip-left { animation: flipLeft 0.5s ease-in-out; }
+  .spread.flip-right { animation: flipRight 0.5s ease-in-out; }
 
   @keyframes flipLeft {
     0% { transform: rotateY(0deg); }
@@ -497,7 +483,8 @@
   </header>
 
   <div class="comics-grid">
-
+    <!-- Add your comic cards here -->
+  </div>
 </div>
 
 <!-- ===== FLIPBOOK PAGE ===== -->
@@ -526,23 +513,10 @@
 
 <script>
 // ===== COMIC DATA: One Fish =====
-// Each spread has a left page and right page. Index 0 = cover spread.
 const oneFishPages = [
-  // 0: Cover + page1
-  {
-    left: 'cover',
-    right: 'page1',
-  },
-  // 1: Pages 2–3
-  {
-    left: 'page2',
-    right: 'page3',
-  },
-  // 2: Back cover
-  {
-    left: 'back-cover',
-    right: 'back-cover-blank',
-  },
+  { left: 'cover',     right: 'page1' },
+  { left: 'page2',     right: 'page3' },
+  { left: 'page4',     right: 'back-cover' }
 ];
 
 let currentSpread = 0;
@@ -557,6 +531,7 @@ function renderPage(type, container) {
     'page1': renderPage1,
     'page2': renderPage2,
     'page3': renderPage3,
+    'page4': renderPage4,
     'back-cover': renderBackCover,
     'back-cover-blank': renderBlank,
   };
@@ -564,7 +539,7 @@ function renderPage(type, container) {
   if (renderers[type]) renderers[type](container);
 }
 
-// Generic full-bleed image page, used for every page image (Cover, page1-5)
+// Generic image page
 function renderImagePage(c, src, alt, pageNum, numSide) {
   const page = document.createElement('div');
   page.className = 'comic-page';
@@ -590,7 +565,7 @@ function renderImagePage(c, src, alt, pageNum, numSide) {
   c.appendChild(page);
 }
 
-// -- COVER --
+// Cover
 function renderCover(c) {
   c.style.background = '#1a1a2e';
   c.innerHTML = `
@@ -599,22 +574,13 @@ function renderCover(c) {
   `;
 }
 
-// -- PAGE 1 --
-function renderPage1(c) {
-  renderImagePage(c, 'comics3/page1.png', 'One Fish - Page 1', '1', 'right');
-}
+// Pages
+function renderPage1(c) { renderImagePage(c, 'comics3/page1.png', 'Page 1', '1', 'right'); }
+function renderPage2(c) { renderImagePage(c, 'comics3/page2.png', 'Page 2', '2', 'left'); }
+function renderPage3(c) { renderImagePage(c, 'comics3/page3.png', 'Page 3', '3', 'right'); }
+function renderPage4(c) { renderImagePage(c, 'comics3/page4.png', 'Page 4', '4', 'left'); }
 
-// -- PAGE 2 --
-function renderPage2(c) {
-  renderImagePage(c, 'comics3/page2.png', 'One Fish - Page 2', '2', 'left');
-}
-
-// -- PAGE 3 --
-function renderPage3(c) {
-  renderImagePage(c, 'comics3/page3.png', 'One Fish - Page 3', '3', 'right');
-}
-
-// -- BACK COVER --
+// Back Cover
 function renderBackCover(c) {
   c.style.background = '#1a1a2e';
   c.innerHTML = `
@@ -644,7 +610,6 @@ function renderBackCover(c) {
   `;
 }
 
-// -- BLANK (right side of final spread) --
 function renderBlank(c) {
   c.style.background = '#1a1a2e';
 }
@@ -668,7 +633,6 @@ function renderSpread(direction) {
   const leftEl = document.getElementById('page-left');
   const rightEl = document.getElementById('page-right');
 
-  // Animate
   if (direction) {
     spread.classList.remove('flip-left','flip-right');
     void spread.offsetWidth;
@@ -706,18 +670,17 @@ function updateControls() {
   document.getElementById('prev-btn').disabled = currentSpread === 0;
   document.getElementById('next-btn').disabled = currentSpread === totalSpreads - 1;
 
-  const labels = ['COVER', 'PP. 2–3', 'THE END'];
+  const labels = ['COVER', 'PP. 2–3', 'PP. 4', 'THE END'];
   document.getElementById('page-indicator').textContent = labels[currentSpread] || `SPREAD ${currentSpread+1}`;
 }
 
-// Keyboard nav
+// Keyboard & Touch navigation
 document.addEventListener('keydown', (e) => {
   if (!document.getElementById('flipbook-page').classList.contains('active')) return;
   if (e.key === 'ArrowRight' || e.key === 'ArrowDown') nextPage();
   if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') prevPage();
 });
 
-// Touch/swipe
 let touchStartX = 0;
 document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, {passive:true});
 document.addEventListener('touchend', e => {
