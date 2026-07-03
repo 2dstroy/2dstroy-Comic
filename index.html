@@ -135,7 +135,7 @@ body {
   border-bottom: 3px double var(--ink);
   padding: 0;
   display: grid;
-  grid-template-columns: 1fr 2.2fr;
+  grid-template-columns: auto 260px 1fr;
 }
 
 .featured-eyebrow {
@@ -152,6 +152,19 @@ body {
   align-items: center;
   justify-content: center;
   white-space: nowrap;
+}
+
+.featured-image {
+  border-right: 3px solid var(--ink);
+  overflow: hidden;
+  background: #ddd5be;
+  display: flex;
+}
+.featured-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .featured-content {
@@ -217,6 +230,44 @@ body {
 .featured-cta:active {
   transform: translate(1px,1px);
   box-shadow: 1px 1px 0 var(--ink);
+}
+
+/* ── SERIES NAV ── */
+.series-nav {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding: 12px 24px;
+  background: #ede5cc;
+  border-bottom: 3px double var(--ink);
+}
+.series-nav-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--faded);
+}
+.series-nav-link {
+  font-family: 'Bangers', cursive;
+  font-size: 0.95rem;
+  letter-spacing: 1.5px;
+  color: var(--ink);
+  background: white;
+  border: 2px solid var(--ink);
+  padding: 4px 14px;
+  text-decoration: none;
+  box-shadow: 2px 2px 0 var(--ink);
+  transition: transform 0.1s, box-shadow 0.1s, background 0.1s;
+}
+.series-nav-link:hover {
+  background: var(--gold);
+  transform: translate(-1px,-1px);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+@media (max-width: 640px) {
+  .series-nav { padding: 10px 12px; gap: 8px; }
 }
 
 /* ── SECTION HEADER ── */
@@ -376,7 +427,14 @@ body {
   background: #ede5cc;
 }
 
-.about-portrait svg { width: 120px; height: 120px; }
+.about-portrait img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid var(--ink);
+  display: block;
+}
 
 .about-text {
   padding: 20px 24px;
@@ -421,6 +479,7 @@ body {
   .mast-title h1 { font-size: 2.6rem; }
   .featured-strip { grid-template-columns: 1fr; }
   .featured-eyebrow { writing-mode: horizontal-tb; transform: none; padding: 8px 16px; font-size: 0.9rem; letter-spacing: 2px; }
+  .featured-image { border-right: none; border-bottom: 3px solid var(--ink); height: 220px; }
   .featured-body { columns: 1; }
   .comics-grid { grid-template-columns: repeat(2, 1fr); padding: 12px 12px 16px; }
   .comic-card-wrap { padding: 10px 10px 14px; }
@@ -476,6 +535,9 @@ body {
   <!-- FEATURED STRIP -->
   <div class="featured-strip">
     <div class="featured-eyebrow">FEATURED ISSUE</div>
+    <div class="featured-image">
+      <img src="comics/Featured.png" alt="One Fish - Featured Cover">
+    </div>
     <div class="featured-content">
       <span class="featured-label">Now Minting — Issue No. 1 &nbsp;·&nbsp; NFT on Ronin</span>
       <h2 class="featured-headline"><em>One Fish</em><br>Makes a Splash</h2>
@@ -486,9 +548,16 @@ body {
     </div>
   </div>
 
-  <!-- SECTION FLAG -->
-  <div class="section-header">
-    <div class="section-flag">All Comics</div>
+  <!-- SERIES NAV -->
+  <div class="series-nav">
+    <span class="series-nav-label">Browse Series:</span>
+    <a href="#one-fish-series" class="series-nav-link">One Fish</a>
+    <a href="#dragon-star-series" class="series-nav-link">Dragon Star</a>
+  </div>
+
+  <!-- SECTION FLAG: ONE FISH -->
+  <div id="one-fish-series" class="section-header">
+    <div class="section-flag">One Fish</div>
     <div class="section-rule"></div>
     <div class="section-sub">Click any cover to read</div>
   </div>
@@ -710,25 +779,232 @@ body {
 
   </div><!-- /comics-grid -->
 
+  <!-- SECTION FLAG: DRAGON STAR -->
+  <div id="dragon-star-series" class="section-header">
+    <div class="section-flag">Dragon Star</div>
+    <div class="section-rule"></div>
+    <div class="section-sub">A Kanstar with the Super Kanstar Legend power</div>
+  </div>
+
+  <!-- DRAGON STAR COMICS GRID -->
+  <div class="comics-grid">
+
+    <!-- Card 1: Dragon Star Episode 1 (live) -->
+    <div class="comic-card-wrap">
+      <div class="comic-card" onclick="window.location.href='dragonstar-flipbook1.html'">
+        <div class="card-thumb">
+          <img src="comics/DragonStarCover1.png" alt="Dragon Star Episode 1 - Cover"
+            style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+        <div class="card-issue">Issue No. 1 &nbsp;·&nbsp; NFT on Ronin</div>
+        <div class="card-title">Dragon Star: Episode 1</div>
+        <div class="card-blurb">A Kanstar with the legendary Super Kanstar power rises.</div>
+        <a class="card-read" href="dragonstar-flipbook1.html">Read now</a>
+      </div>
+    </div>
+
+    <!-- Card 2: Dragon Star Episode 2 (live) -->
+    <div class="comic-card-wrap">
+      <div class="comic-card" onclick="window.location.href='dragonstar-flipbook2.html'">
+        <div class="card-thumb">
+          <img src="comics/DragonStarCover2.png" alt="Dragon Star Episode 2 - Cover"
+            style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+        <div class="card-issue">Issue No. 2 &nbsp;·&nbsp; NFT on Ronin</div>
+        <div class="card-title">Dragon Star: Episode 2</div>
+        <div class="card-blurb">A Kanstar with the legendary Super Kanstar power rises.</div>
+        <a class="card-read" href="dragonstar-flipbook2.html">Read now</a>
+      </div>
+    </div>
+
+    <!-- Card 3: Dragon Star Episode 3 (live) -->
+    <div class="comic-card-wrap">
+      <div class="comic-card" onclick="window.location.href='dragonstar-flipbook3.html'">
+        <div class="card-thumb">
+          <img src="comics/DragonStarCover3.png" alt="Dragon Star Episode 3 - Cover"
+            style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+        <div class="card-issue">Issue No. 3 &nbsp;·&nbsp; NFT on Ronin</div>
+        <div class="card-title">Dragon Star: Episode 3</div>
+        <div class="card-blurb">A Kanstar with the legendary Super Kanstar power rises.</div>
+        <a class="card-read" href="dragonstar-flipbook3.html">Read now</a>
+      </div>
+    </div>
+
+    <!-- Card 4: Dragon Star Episode 4 (live) -->
+    <div class="comic-card-wrap">
+      <div class="comic-card" onclick="window.location.href='dragonstar-flipbook4.html'">
+        <div class="card-thumb">
+          <img src="comics/DragonStarCover4.png" alt="Dragon Star Episode 4 - Cover"
+            style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+        <div class="card-issue">Issue No. 4 &nbsp;·&nbsp; NFT on Ronin</div>
+        <div class="card-title">Dragon Star: Episode 4</div>
+        <div class="card-blurb">A Kanstar with the legendary Super Kanstar power rises.</div>
+        <a class="card-read" href="dragonstar-flipbook4.html">Read now</a>
+      </div>
+    </div>
+
+    <!-- Card 5: Dragon Star Episode 5 (live) -->
+    <div class="comic-card-wrap">
+      <div class="comic-card" onclick="window.location.href='dragonstar-flipbook5.html'">
+        <div class="card-thumb">
+          <img src="comics/DragonStarCover5.png" alt="Dragon Star Episode 5 - Cover"
+            style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+        <div class="card-issue">Issue No. 5 &nbsp;·&nbsp; NFT on Ronin</div>
+        <div class="card-title">Dragon Star: Episode 5</div>
+        <div class="card-blurb">A Kanstar with the legendary Super Kanstar power rises.</div>
+        <a class="card-read" href="dragonstar-flipbook5.html">Read now</a>
+      </div>
+    </div>
+
+    <!-- Card 6: Dragon Star Episode 6 (live) -->
+    <div class="comic-card-wrap">
+      <div class="comic-card" onclick="window.location.href='dragonstar-flipbook6.html'">
+        <div class="card-thumb">
+          <img src="comics/DragonStarCover6.png" alt="Dragon Star Episode 6 - Cover"
+            style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+        <div class="card-issue">Issue No. 6 &nbsp;·&nbsp; NFT on Ronin</div>
+        <div class="card-title">Dragon Star: Episode 6</div>
+        <div class="card-blurb">A Kanstar with the legendary Super Kanstar power rises.</div>
+        <a class="card-read" href="dragonstar-flipbook6.html">Read now</a>
+      </div>
+    </div>
+
+    <!-- Card 7: Dragon Star Episode 7 (live) -->
+    <div class="comic-card-wrap">
+      <div class="comic-card" onclick="window.location.href='dragonstar-flipbook7.html'">
+        <div class="card-thumb">
+          <img src="comics/DragonStarCover7.png" alt="Dragon Star Episode 7 - Cover"
+            style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+        <div class="card-issue">Issue No. 7 &nbsp;·&nbsp; NFT on Ronin</div>
+        <div class="card-title">Dragon Star: Episode 7</div>
+        <div class="card-blurb">A Kanstar with the legendary Super Kanstar power rises.</div>
+        <a class="card-read" href="dragonstar-flipbook7.html">Read now</a>
+      </div>
+    </div>
+
+    <!-- Card 8: Dragon Star Episode 8 (live) -->
+    <div class="comic-card-wrap">
+      <div class="comic-card" onclick="window.location.href='dragonstar-flipbook8.html'">
+        <div class="card-thumb">
+          <img src="comics/DragonStarCover8.png" alt="Dragon Star Episode 8 - Cover"
+            style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+        <div class="card-issue">Issue No. 8 &nbsp;·&nbsp; NFT on Ronin</div>
+        <div class="card-title">Dragon Star: Episode 8</div>
+        <div class="card-blurb">A Kanstar with the legendary Super Kanstar power rises.</div>
+        <a class="card-read" href="dragonstar-flipbook8.html">Read now</a>
+      </div>
+    </div>
+
+    <!-- Card 9: Dragon Star Episode 9 (live) -->
+    <div class="comic-card-wrap">
+      <div class="comic-card" onclick="window.location.href='dragonstar-flipbook9.html'">
+        <div class="card-thumb">
+          <img src="comics/DragonStarCover9.png" alt="Dragon Star Episode 9 - Cover"
+            style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+        <div class="card-issue">Issue No. 9 &nbsp;·&nbsp; NFT on Ronin</div>
+        <div class="card-title">Dragon Star: Episode 9</div>
+        <div class="card-blurb">A Kanstar with the legendary Super Kanstar power rises.</div>
+        <a class="card-read" href="dragonstar-flipbook9.html">Read now</a>
+      </div>
+    </div>
+
+    <!-- Card 10: Dragon Star Episode 10 (live) -->
+    <div class="comic-card-wrap">
+      <div class="comic-card" onclick="window.location.href='dragonstar-flipbook10.html'">
+        <div class="card-thumb">
+          <img src="comics/DragonStarCover10.png" alt="Dragon Star Episode 10 - Cover"
+            style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+        <div class="card-issue">Issue No. 10 &nbsp;·&nbsp; NFT on Ronin</div>
+        <div class="card-title">Dragon Star: Episode 10</div>
+        <div class="card-blurb">A Kanstar with the legendary Super Kanstar power rises.</div>
+        <a class="card-read" href="dragonstar-flipbook10.html">Read now</a>
+      </div>
+    </div>
+
+    <!-- Card 11: Dragon Star Episode 11 (live) -->
+    <div class="comic-card-wrap">
+      <div class="comic-card" onclick="window.location.href='dragonstar-flipbook11.html'">
+        <div class="card-thumb">
+          <img src="comics/DragonStarCover11.png" alt="Dragon Star Episode 11 - Cover"
+            style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+        <div class="card-issue">Issue No. 11 &nbsp;·&nbsp; NFT on Ronin</div>
+        <div class="card-title">Dragon Star: Episode 11</div>
+        <div class="card-blurb">A Kanstar with the legendary Super Kanstar power rises.</div>
+        <a class="card-read" href="dragonstar-flipbook11.html">Read now</a>
+      </div>
+    </div>
+
+    <!-- Card 12: Dragon Star Episode 12 (live) -->
+    <div class="comic-card-wrap">
+      <div class="comic-card" onclick="window.location.href='dragonstar-flipbook12.html'">
+        <div class="card-thumb">
+          <img src="comics/DragonStarCover12.png" alt="Dragon Star Episode 12 - Cover"
+            style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+        <div class="card-issue">Issue No. 12 &nbsp;·&nbsp; NFT on Ronin</div>
+        <div class="card-title">Dragon Star: Episode 12</div>
+        <div class="card-blurb">A Kanstar with the legendary Super Kanstar power rises.</div>
+        <a class="card-read" href="dragonstar-flipbook12.html">Read now</a>
+      </div>
+    </div>
+
+    <!-- Card 13: Dragon Star Episode 13 (live) -->
+    <div class="comic-card-wrap">
+      <div class="comic-card" onclick="window.location.href='dragonstar-flipbook13.html'">
+        <div class="card-thumb">
+          <img src="comics/DragonStarCover13.png" alt="Dragon Star Episode 13 - Cover"
+            style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+        <div class="card-issue">Issue No. 13 &nbsp;·&nbsp; NFT on Ronin</div>
+        <div class="card-title">Dragon Star: Episode 13</div>
+        <div class="card-blurb">A Kanstar with the legendary Super Kanstar power rises.</div>
+        <a class="card-read" href="dragonstar-flipbook13.html">Read now</a>
+      </div>
+    </div>
+
+    <!-- Card 14: Dragon Star Episode 14 (live) -->
+    <div class="comic-card-wrap">
+      <div class="comic-card" onclick="window.location.href='dragonstar-flipbook14.html'">
+        <div class="card-thumb">
+          <img src="comics/DragonStarCover14.png" alt="Dragon Star Episode 14 - Cover"
+            style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+        <div class="card-issue">Issue No. 14 &nbsp;·&nbsp; NFT on Ronin</div>
+        <div class="card-title">Dragon Star: Episode 14</div>
+        <div class="card-blurb">A Kanstar with the legendary Super Kanstar power rises.</div>
+        <a class="card-read" href="dragonstar-flipbook14.html">Read now</a>
+      </div>
+    </div>
+
+    <!-- Card 15: Dragon Star Episode 15 (live) -->
+    <div class="comic-card-wrap">
+      <div class="comic-card" onclick="window.location.href='dragonstar-flipbook15.html'">
+        <div class="card-thumb">
+          <img src="comics/DragonStarCover15.png" alt="Dragon Star Episode 15 - Cover"
+            style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+        <div class="card-issue">Issue No. 15 &nbsp;·&nbsp; NFT on Ronin</div>
+        <div class="card-title">Dragon Star: Episode 15</div>
+        <div class="card-blurb">A Kanstar with the legendary Super Kanstar power rises.</div>
+        <a class="card-read" href="dragonstar-flipbook15.html">Read now</a>
+      </div>
+    </div>
+
+  </div><!-- /comics-grid -->
+
   <!-- ABOUT STRIP -->
   <div class="about-strip">
     <div class="about-portrait">
-      <!-- Simple artist silhouette placeholder -->
-      <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="60" cy="60" r="58" fill="#ddd5be" stroke="#1C1C1C" stroke-width="2.5"/>
-        <!-- Head -->
-        <circle cx="60" cy="44" r="22" fill="#c9b89a" stroke="#1C1C1C" stroke-width="2"/>
-        <!-- Body -->
-        <path d="M 28 110 Q 30 78 60 74 Q 90 78 92 110" fill="#c9b89a" stroke="#1C1C1C" stroke-width="2"/>
-        <!-- Pencil in hand -->
-        <rect x="78" y="82" width="5" height="22" fill="#FFD700" stroke="#1C1C1C" stroke-width="1.5" transform="rotate(20 80 88)"/>
-        <polygon points="78,104 83,104 80.5,112" fill="#D62828" stroke="#1C1C1C" stroke-width="1" transform="rotate(20 80 104)"/>
-        <!-- Smile -->
-        <path d="M 50 48 Q 60 56 70 48" fill="none" stroke="#1C1C1C" stroke-width="2" stroke-linecap="round"/>
-        <!-- Eyes -->
-        <circle cx="51" cy="40" r="3" fill="#1C1C1C"/>
-        <circle cx="69" cy="40" r="3" fill="#1C1C1C"/>
-      </svg>
+      <img src="profile/profile.png" alt="2dstroy - Artist Profile">
     </div>
     <div class="about-text">
       <div class="about-head">Meet 2dstroy</div>
