@@ -5,14 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>One Fish - RoninComics</title>
 
-<!-- =====================================================================
-  PRELOAD — starts downloading the cover + page 1 immediately, before the
-  rest of the page even parses. This is what kills the "blank flash"
-  when someone taps a comic on the index and lands here.
-
-  >>> On comic-flipbook2.html, change these two hrefs to THAT comic's
-      cover + page1 image paths. <<<
-===================================================================== -->
 <link rel="preload" as="image" href="comics3/Cover3.png">
 <link rel="preload" as="image" href="comics3/page1.png">
 
@@ -50,7 +42,7 @@
     gap: 16px;
     margin-bottom: 20px;
     width: 100%;
-    max-width: 800px;
+    max-width: 1000px;
   }
 
   .back-btn {
@@ -80,7 +72,6 @@
     -webkit-text-stroke: 1.5px var(--ink);
   }
 
-  /* Loading overlay — visible until cover + page 1 are ready */
   #loading-overlay {
     position: fixed;
     inset: 0;
@@ -106,12 +97,12 @@
 
   .book-container {
     perspective: 1800px;
-    width: min(720px, 96vw);
+    width: min(1000px, 96vw);
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
   }
-  .book { width: 100%; max-width: 700px; position: relative; display: flex; justify-content: center; }
+  .book { width: 100%; max-width: 980px; position: relative; display: flex; justify-content: center; }
 
   .spread {
     display: flex;
@@ -121,7 +112,7 @@
     box-shadow: 8px 8px 0 var(--ink), 0 20px 60px rgba(0,0,0,0.6);
     overflow: hidden;
     background: var(--paper);
-    height: 620px;
+    height: min(80vh, 780px);
     position: relative;
   }
 
@@ -146,7 +137,6 @@
     z-index: 10;
   }
 
-  /* Mobile / single-page mode */
   .spread.single-page .page-left { display: none; }
   .spread.single-page::after { display: none; }
   .spread.single-page .page-right { border-right: none; }
@@ -158,7 +148,7 @@
     border-radius: 3px;
     background: var(--panel-bg);
     width: 100%;
-    aspect-ratio: 2 / 3;   /* locked comic-page shape — same on every device */
+    aspect-ratio: 2 / 3;
     max-height: 100%;
     display: flex;
     align-items: center;
@@ -232,7 +222,6 @@
   </div>
 
   <div class="flipbook-header">
-    <!-- back to the gallery: change this href if your index isn't index.html -->
     <a class="back-btn" href="index.html">← BACK</a>
     <div class="flipbook-title" id="flipbook-title">ONE FISH</div>
   </div>
@@ -255,15 +244,9 @@
 </div>
 
 <script>
-/* =========================================================================
-   To make comic-flipbook3.html: copy this whole file and only change:
-     1. The two <link rel="preload"> hrefs in <head>
-     2. IMAGE_FOLDER, COMIC_TITLE, and the file names in singlePages below
-   ========================================================================= */
 const IMAGE_FOLDER = 'comics3';
 const COMIC_TITLE = 'ONE FISH';
 
-// One entry per physical page, in reading order.
 const singlePages = [
   { id: 'cover',      type: 'cover',      src: `${IMAGE_FOLDER}/Cover3.png`,           label: 'COVER' },
   { id: 'page1',      type: 'image',      src: `${IMAGE_FOLDER}/page1.png`, num: '1',  label: 'PAGE 1' },
@@ -274,7 +257,6 @@ const singlePages = [
 
 document.getElementById('flipbook-title').textContent = COMIC_TITLE;
 
-// ===== RESPONSIVE MODE: 1 page per step on phones, 2 (spread) on desktop =====
 const MOBILE_QUERY = window.matchMedia('(max-width: 700px)');
 let isMobile = MOBILE_QUERY.matches;
 
@@ -376,7 +358,6 @@ function updateControls() {
   document.getElementById('page-indicator').textContent = label;
 }
 
-// Keep the reader's place when the phone rotates / crosses the breakpoint
 function handleModeChange() {
   const nowMobile = MOBILE_QUERY.matches;
   if (nowMobile === isMobile) return;
@@ -391,38 +372,35 @@ function handleModeChange() {
 }
 MOBILE_QUERY.addEventListener('change', handleModeChange);
 
-// ===== PRELOAD so the cover + first page appear instantly =====
 function preloadAndStart() {
   const urls = singlePages.filter(p => p.src).map(p => p.src);
   const overlay = document.getElementById('loading-overlay');
   const reveal = () => overlay.classList.add('hidden');
   if (urls.length === 0) { reveal(); return; }
 
-  const readyThreshold = Math.min(2, urls.length); // cover + page 1
+  const readyThreshold = Math.min(2, urls.length);
   let loaded = 0;
   urls.forEach(src => {
     const img = new Image();
     img.onload = img.onerror = () => { loaded++; if (loaded >= readyThreshold) reveal(); };
     img.src = src;
   });
-  setTimeout(reveal, 4000); // never block the reader for more than 4s
+  setTimeout(reveal, 4000);
 }
 
 window.addEventListener('DOMContentLoaded', () => {
   window.scrollTo(0, 0);
-  currentStep = 0; // always open on the cover
+  currentStep = 0;
   renderStep();
   updateControls();
   preloadAndStart();
 });
 
-// Keyboard nav
 document.addEventListener('keydown', (e) => {
   if (e.key === 'ArrowRight' || e.key === 'ArrowDown') nextPage();
   if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') prevPage();
 });
 
-// Touch/swipe
 let touchStartX = 0;
 document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
 document.addEventListener('touchend', e => {
