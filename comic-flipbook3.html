@@ -168,17 +168,6 @@
     margin: auto;
   }
 
-  .page-img {
-    object-fit: cover;      /* phones: fill the panel edge-to-edge */
-    object-position: center top;
-  }
-  @media (min-width: 701px) {
-    .page-img {
-      object-fit: contain;  /* desktop: always show the full image, nothing cropped */
-      object-position: center;
-    }
-  }
-
   .page-number {
     position: absolute; bottom: 6px;
     font-family: 'Bangers', cursive;
@@ -334,7 +323,7 @@ function renderSinglePage(pageData, container, side) {
   p.className = 'panel';
   p.style.flex = '1';
   p.innerHTML = `<img src="${pageData.src}" alt="${COMIC_TITLE} - Page ${pageData.num || ''}"
-    class="page-img" style="width:100%;height:100%;display:block;background:#fff8e7;">`;
+    style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;background:#fff8e7;">`;
   page.appendChild(p);
 
   if (pageData.num) {
