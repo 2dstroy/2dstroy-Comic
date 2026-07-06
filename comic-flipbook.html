@@ -323,7 +323,8 @@
 
 <script>
 const IMAGE_FOLDER = 'comics';
-const COMIC_TITLE = 'ONE FISH EPISODE 1';
+// Keep the on-screen title and the JS constant in sync.
+const COMIC_TITLE = 'ONE FISH EPISODE 2';
 
 // Next issue in the series — update these to change where "THE END" page links.
 const NEXT_ISSUE_URL = 'comic-flipbook2.html';
@@ -438,9 +439,9 @@ function updateControls() {
   document.getElementById('next-btn').disabled = currentStep === steps.length - 1;
   const step = steps[currentStep];
   const label = isMobile
-    ? step.pages[0].label
-    : (step.pages[0] ? step.pages[0].label : '') + (step.pages[1] ? ' / ' + step.pages[1].label.replace('PAGE ', '') : '');
-  document.getElementById('page-indicator').textContent = label;
+    ? (step.pages[0] && step.pages[0].label) || ''
+    : [step.pages[0] && step.pages[0].label, step.pages[1] && step.pages[1].label].filter(Boolean).join(' / ');
+  document.getElementById('page-indicator').textContent = label || '';
 }
 
 function handleModeChange() {
@@ -463,6 +464,7 @@ function preloadAndStart() {
   const reveal = () => overlay.classList.add('hidden');
   if (urls.length === 0) { reveal(); return; }
 
+  // Reveal after at least two images are ready (keeps the loading screen from hanging on slow networks)
   const readyThreshold = Math.min(2, urls.length);
   let loaded = 0;
   urls.forEach(src => {
